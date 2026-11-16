@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Llista de confirmacions</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="card wide">
+  <h1>Confirmacions</h1>
+  <form id="login">
+    <div>
+      <label for="clau">Contrasenya</label>
+      <input type="password" id="clau" required autocomplete="current-password">
+    </div>
+    <button type="submit">Veure la llista</button>
+  </form>
+  <div id="res" class="msg"></div>
+  <div id="data" class="hidden">
+    <div class="stats" id="stats"></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Data</th><th>Nom</th><th>Assisteix</th><th>Persones</th><th>Al·lèrgies</th><th>Missatge</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </div>
+</main>
+<script src="config.js"></script>
+<script>
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.getElementById('login').addEventListener('submit', async e => {
+  e.preventDefault();
+  const res = document.getElementById('res'); res.className = 'msg'; res.textContent = 'Carregant…';
+  try {
+    const r = await fetch(window.SCRIPT_URL + '?clau=' + encodeURIComponent(document.getElementById('clau').value));
+    const j = await r.json();
+    if (!j.ok) throw new Error();
+    const rows = j.rows;
+    const si = rows.filter(x => x.assistencia === 'Sí'), no = rows.filter(x => x.assistencia === 'No');
+    const pers = si.reduce((a, x) => a + (+x.persones || 0), 0);
+    document.getElementById('stats').innerHTML =
+      `<div class="stat"><b>${si.length}</b>confirmacions</div><div class="stat"><b>${pers}</b>persones</div><div class="stat"><b>${no.length}</b>no vindran</div>`;
+    document.getElementById('rows').innerHTML = rows.map(x =>
+      `<tr><td>${esc(x.data)}</td><td>${esc(x.nom)}</td><td>${esc(x.assistencia)}</td><td>${esc(x.persones)}</td><td>${esc(x.alergies)}</td><td>${esc(x.missatge)}</td></tr>`).join('');
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('data').classList.remove('hidden');
+    res.textContent = '';
+  } catch (err) {
+    res.className = 'msg err'; res.textContent = 'Contrasenya incorrecta o error de connexió.';
+  }
+});
+</script>
+</body>
+</html>

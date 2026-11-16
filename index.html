@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jordi i Pol · Confirmació d'assistència</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="card">
+  <img class="map" src="paisos_catalans.png" alt="">
+  <h1>Jordi i Pol</h1>
+  <div class="date">31 · 10 · 2027</div>
+  <p class="sub">Restaurant Algar de Don Joan<br>Callosa d'en Sarrià<br><br>Ens farà molta il·lusió comptar amb vosaltres.<br>Confirmeu la vostra assistència:</p>
+
+  <form id="f">
+    <div>
+      <label for="nom">Nom i cognoms</label>
+      <input type="text" id="nom" name="nom" required maxlength="120" autocomplete="name">
+    </div>
+    <div>
+      <label>Hi assistireu?</label>
+      <div class="choice">
+        <div><input type="radio" name="assistencia" id="si" value="Sí" required><label for="si">Sí, hi serem!</label></div>
+        <div><input type="radio" name="assistencia" id="no" value="No"><label for="no">No podrem venir</label></div>
+      </div>
+    </div>
+    <div id="extra">
+      <div>
+        <label for="persones">Nombre de persones (amb vosaltres)</label>
+        <input type="number" id="persones" name="persones" min="1" max="10" value="1">
+      </div>
+      <div style="margin-top:16px">
+        <label for="alergies">Al·lèrgies o intoleràncies</label>
+        <input type="text" id="alergies" name="alergies" maxlength="200" placeholder="Si no n'hi ha, deixeu-ho buit">
+      </div>
+    </div>
+    <div>
+      <label for="missatge">Missatge (opcional)</label>
+      <textarea id="missatge" name="missatge" maxlength="500"></textarea>
+    </div>
+    <input type="text" name="web" tabindex="-1" autocomplete="off" class="hidden">
+    <button type="submit" id="btn">Enviar</button>
+  </form>
+  <div id="res" class="msg"></div>
+</main>
+<script src="config.js"></script>
+<script>
+const f = document.getElementById('f'), res = document.getElementById('res'), btn = document.getElementById('btn'), extra = document.getElementById('extra');
+f.addEventListener('change', () => {
+  extra.classList.toggle('hidden', f.assistencia.value === 'No');
+});
+f.addEventListener('submit', async e => {
+  e.preventDefault();
+  res.className = 'msg';
+  if (!window.SCRIPT_URL) { res.className = 'msg err'; res.textContent = 'El formulari encara no està configurat.'; return; }
+  btn.disabled = true; btn.textContent = 'Enviant…';
+  const d = Object.fromEntries(new FormData(f));
+  if (d.assistencia === 'No') { d.persones = 0; d.alergies = ''; }
+  try {
+    await fetch(window.SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(d) });
+    f.classList.add('hidden');
+    res.textContent = d.assistencia === 'Sí'
+      ? 'Gràcies! Hem rebut la vostra confirmació. Us esperem el 31 d\'octubre!'
+      : 'Gràcies per avisar-nos. Us trobarem a faltar!';
+  } catch (err) {
+    res.className = 'msg err'; res.textContent = 'No s\'ha pogut enviar. Torneu-ho a provar o escriviu-nos al 652 227 577.';
+    btn.disabled = false; btn.textContent = 'Enviar';
+  }
+});
+</script>
+</body>
+</html>
