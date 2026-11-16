@@ -117,7 +117,7 @@
   <p class="soft">Confirmeu la vostra assistència quan abans millor.</p>
   <form id="f" class="rsvp">
     <div>
-      <label for="nom">Nom i cognoms</label>
+      <label for="nom">El vostre nom i cognoms</label>
       <input type="text" id="nom" name="nom" required maxlength="120" autocomplete="name">
     </div>
     <div>
@@ -129,12 +129,13 @@
     </div>
     <div id="extra">
       <div>
-        <label for="persones">Nombre de persones (amb vosaltres)</label>
-        <input type="number" id="persones" name="persones" min="1" max="10" value="1">
+        <label for="alergies">Al·lèrgies o intoleràncies (les vostres)</label>
+        <input type="text" id="alergies" maxlength="60" placeholder="Si no n'hi ha, deixeu-ho buit">
       </div>
       <div style="margin-top:16px">
-        <label for="alergies">Al·lèrgies o intoleràncies</label>
-        <input type="text" id="alergies" name="alergies" maxlength="200" placeholder="Si no n'hi ha, deixeu-ho buit">
+        <label>Convidats que vindran amb vosaltres</label>
+        <div id="guests"></div>
+        <button type="button" id="add" class="btn ghost small">+ Afegir convidat</button>
       </div>
     </div>
     <div>
@@ -178,14 +179,36 @@ tick(); setInterval(tick, 1000);
 addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 60), { passive: true });
 
 const f = document.getElementById('f'), res = document.getElementById('res'), btn = document.getElementById('btn'), extra = document.getElementById('extra');
+const guests = document.getElementById('guests'), add = document.getElementById('add'), MAX = 9;
+function addGuest() {
+  if (guests.children.length >= MAX) return;
+  const g = document.createElement('div'); g.className = 'guest';
+  g.innerHTML = '<input type="text" class="gn" maxlength="50" placeholder="Nom i cognoms del convidat">' +
+    '<input type="text" class="ga" maxlength="60" placeholder="Al·lèrgies o intoleràncies (opcional)">' +
+    '<button type="button" class="rm" aria-label="Eliminar convidat">×</button>';
+  g.querySelector('.rm').onclick = () => { g.remove(); add.classList.remove('hidden'); };
+  guests.appendChild(g);
+  add.classList.toggle('hidden', guests.children.length >= MAX);
+}
+add.onclick = addGuest;
 f.addEventListener('change', () => extra.classList.toggle('hidden', f.assistencia.value === 'No'));
 f.addEventListener('submit', async e => {
   e.preventDefault();
   res.className = 'msg';
   if (!window.SCRIPT_URL) { res.className = 'msg err'; res.textContent = 'El formulari encara no està configurat.'; return; }
+  const d = { nom: f.nom.value.trim(), assistencia: f.assistencia.value, missatge: f.missatge.value, web: f.web.value };
+  if (d.assistencia === 'Sí') {
+    const own = f.alergies.value.trim();
+    const lines = [d.nom + ' (' + (own || 'sense al·lèrgies') + ')'];
+    let n = 1;
+    for (const g of guests.children) {
+      const gn = g.querySelector('.gn').value.trim(), ga = g.querySelector('.ga').value.trim();
+      if (!gn) { if (ga) { res.className = 'msg err'; res.textContent = 'Falta el nom d\'algun convidat.'; return; } continue; }
+      lines.push(gn + ' (' + (ga || 'sense al·lèrgies') + ')'); n++;
+    }
+    d.persones = n; d.alergies = lines.join('\n');
+  } else { d.persones = 0; d.alergies = ''; }
   btn.disabled = true; btn.textContent = 'Enviant…';
-  const d = Object.fromEntries(new FormData(f));
-  if (d.assistencia === 'No') { d.persones = 0; d.alergies = ''; }
   try {
     await fetch(window.SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(d) });
     f.classList.add('hidden');

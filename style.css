@@ -28,3 +28,4 @@ table{width:100%;border-collapse:collapse;text-align:left;font-size:.95rem}
 th,td{padding:8px 10px;border-bottom:1px solid #b08e5755;vertical-align:top}
 th{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dgreen)}
 .tablewrap{overflow-x:auto}
+td{white-space:pre-line}

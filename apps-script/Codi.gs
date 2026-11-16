@@ -19,7 +19,7 @@ function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
     if (d.web) return ContentService.createTextOutput('ok');
-    const clean = s => String(s || '').slice(0, 500).replace(/^[=+\-@]/, "'$&");
+    const clean = s => String(s || '').slice(0, 1000).replace(/^[=+\-@]/, "'$&");
     sheet_().appendRow([
       new Date(), clean(d.nom), d.assistencia === 'Sí' ? 'Sí' : 'No',
       Math.max(0, Math.min(10, parseInt(d.persones, 10) || 0)), clean(d.alergies), clean(d.missatge)
