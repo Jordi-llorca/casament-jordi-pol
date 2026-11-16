@@ -6,7 +6,7 @@
 <title>Jordi i Pol · 31 d'octubre de 2027</title>
 <meta name="description" content="Ens casem! 31 d'octubre de 2027 · Restaurant Algar de Don Joan, Callosa d'en Sarrià">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="site.css?v=3">
 </head>
 <body>
 
@@ -118,7 +118,7 @@
   <form id="f" class="rsvp card-form">
     <div>
       <label for="nom">El vostre nom i cognoms</label>
-      <input type="text" id="nom" name="nom" required maxlength="120" autocomplete="name">
+      <input type="text" id="nom" name="nom" required maxlength="120" autocomplete="name" placeholder="Nom i cognoms">
     </div>
     <div>
       <label>Hi assistireu?</label>
@@ -193,22 +193,24 @@ function addGuest() {
 }
 add.onclick = addGuest;
 f.addEventListener('change', () => extra.classList.toggle('hidden', f.assistencia.value === 'No'));
+const hasSurname = n => n.trim().split(/\s+/).filter(Boolean).length >= 2;
+function fail(msg, el) { res.className = 'msg err'; res.textContent = msg; if (el) el.focus(); res.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
 f.addEventListener('submit', async e => {
   e.preventDefault();
-  res.className = 'msg';
-  if (!window.SCRIPT_URL) { res.className = 'msg err'; res.textContent = 'El formulari encara no està configurat.'; return; }
-  const d = { nom: f.nom.value.trim(), assistencia: f.assistencia.value, missatge: f.missatge.value, web: f.web.value };
+  res.className = 'msg'; res.textContent = '';
+  if (!window.SCRIPT_URL) return fail('El formulari encara no està configurat.');
+  const nom = f.nom.value.trim();
+  if (!hasSurname(nom)) return fail('Escriviu el vostre nom i, almenys, un cognom.', f.nom);
+  const d = { nom, assistencia: f.assistencia.value, missatge: f.missatge.value, web: f.web.value, convidats: [] };
   if (d.assistencia === 'Sí') {
-    const own = f.alergies.value.trim();
-    const lines = [d.nom + ' (' + (own || 'sense al·lèrgies') + ')'];
-    let n = 1;
+    d.convidats.push({ nom, alergies: f.alergies.value.trim() });
     for (const g of guests.children) {
-      const gn = g.querySelector('.gn').value.trim(), ga = g.querySelector('.ga').value.trim();
-      if (!gn) { if (ga) { res.className = 'msg err'; res.textContent = 'Falta el nom d\'algun convidat.'; return; } continue; }
-      lines.push(gn + ' (' + (ga || 'sense al·lèrgies') + ')'); n++;
+      const gn = g.querySelector('.gn'), ga = g.querySelector('.ga').value.trim();
+      if (!gn.value.trim()) { if (ga) return fail('Falta el nom d\'un convidat.', gn); continue; }
+      if (!hasSurname(gn.value)) return fail('Cada convidat necessita nom i, almenys, un cognom.', gn);
+      d.convidats.push({ nom: gn.value.trim(), alergies: ga });
     }
-    d.persones = n; d.alergies = lines.join('\n');
-  } else { d.persones = 0; d.alergies = ''; }
+  } else d.convidats.push({ nom, alergies: '' });
   btn.disabled = true; btn.textContent = 'Enviant…';
   try {
     await fetch(window.SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(d) });

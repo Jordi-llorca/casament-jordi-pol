@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Llista de confirmacions</title>
 <meta name="robots" content="noindex,nofollow">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <main class="card wide">
@@ -21,7 +21,7 @@
   <div id="data" class="hidden">
     <div class="stats" id="stats"></div>
     <div class="tablewrap"><table>
-      <thead><tr><th>Data</th><th>Nom</th><th>Assisteix</th><th>Persones</th><th>Al·lèrgies</th><th>Missatge</th></tr></thead>
+      <thead><tr><th>Nom i cognoms</th><th>Assisteix</th><th>Al·lèrgies</th><th>Confirmat per</th><th>Missatge</th><th>Data</th></tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
   </div>
@@ -38,11 +38,10 @@ document.getElementById('login').addEventListener('submit', async e => {
     if (!j.ok) throw new Error();
     const rows = j.rows;
     const si = rows.filter(x => x.assistencia === 'Sí'), no = rows.filter(x => x.assistencia === 'No');
-    const pers = si.reduce((a, x) => a + (+x.persones || 0), 0);
     document.getElementById('stats').innerHTML =
-      `<div class="stat"><b>${si.length}</b>confirmacions</div><div class="stat"><b>${pers}</b>persones</div><div class="stat"><b>${no.length}</b>no vindran</div>`;
+      `<div class="stat"><b>${si.length}</b>persones confirmades</div><div class="stat"><b>${no.length}</b>no vindran</div><div class="stat"><b>${si.filter(x => x.alergies).length}</b>amb al·lèrgies</div>`;
     document.getElementById('rows').innerHTML = rows.map(x =>
-      `<tr><td>${esc(x.data)}</td><td>${esc(x.nom)}</td><td>${esc(x.assistencia)}</td><td>${esc(x.persones)}</td><td>${esc(x.alergies)}</td><td>${esc(x.missatge)}</td></tr>`).join('');
+      `<tr><td>${esc(x.nom)}</td><td>${esc(x.assistencia)}</td><td>${esc(x.alergies)}</td><td>${esc(x.grup)}</td><td>${esc(x.missatge)}</td><td>${esc(x.data)}</td></tr>`).join('');
     document.getElementById('login').classList.add('hidden');
     document.getElementById('data').classList.remove('hidden');
     res.textContent = '';
