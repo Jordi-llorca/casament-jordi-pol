@@ -115,7 +115,7 @@
 <section id="confirmacio" class="sec alt">
   <h2>Confirmació d'assistència</h2>
   <p class="soft">Confirmeu la vostra assistència quan abans millor.</p>
-  <form id="f" class="rsvp">
+  <form id="f" class="rsvp card-form">
     <div>
       <label for="nom">El vostre nom i cognoms</label>
       <input type="text" id="nom" name="nom" required maxlength="120" autocomplete="name">
@@ -133,9 +133,9 @@
         <input type="text" id="alergies" maxlength="60" placeholder="Si no n'hi ha, deixeu-ho buit">
       </div>
       <div style="margin-top:16px">
-        <label>Convidats que vindran amb vosaltres</label>
+        <label>Vindran convidats amb vosaltres?</label>
         <div id="guests"></div>
-        <button type="button" id="add" class="btn ghost small">+ Afegir convidat</button>
+        <button type="button" id="add" class="btn ghost small">+ Afegir un convidat</button>
       </div>
     </div>
     <div>
@@ -180,14 +180,15 @@ addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 60), { 
 
 const f = document.getElementById('f'), res = document.getElementById('res'), btn = document.getElementById('btn'), extra = document.getElementById('extra');
 const guests = document.getElementById('guests'), add = document.getElementById('add'), MAX = 9;
+function renum() { [...guests.children].forEach((g, i) => g.querySelector('.gt').textContent = 'Convidat ' + (i + 2)); }
 function addGuest() {
   if (guests.children.length >= MAX) return;
   const g = document.createElement('div'); g.className = 'guest';
-  g.innerHTML = '<input type="text" class="gn" maxlength="50" placeholder="Nom i cognoms del convidat">' +
-    '<input type="text" class="ga" maxlength="60" placeholder="Al·lèrgies o intoleràncies (opcional)">' +
-    '<button type="button" class="rm" aria-label="Eliminar convidat">×</button>';
-  g.querySelector('.rm').onclick = () => { g.remove(); add.classList.remove('hidden'); };
-  guests.appendChild(g);
+  g.innerHTML = '<div class="gh"><span class="gt"></span><button type="button" class="rm">Eliminar</button></div>' +
+    '<div class="gf"><div><label>Nom i cognoms</label><input type="text" class="gn" maxlength="50"></div>' +
+    '<div><label>Al·lèrgies o intoleràncies</label><input type="text" class="ga" maxlength="60" placeholder="Opcional"></div></div>';
+  g.querySelector('.rm').onclick = () => { g.remove(); renum(); add.classList.remove('hidden'); };
+  guests.appendChild(g); renum();
   add.classList.toggle('hidden', guests.children.length >= MAX);
 }
 add.onclick = addGuest;
