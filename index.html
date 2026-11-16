@@ -3,18 +3,119 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jordi i Pol · Confirmació d'assistència</title>
+<title>Jordi i Pol · 31 d'octubre de 2027</title>
+<meta name="description" content="Ens casem! 31 d'octubre de 2027 · Restaurant Algar de Don Joan, Callosa d'en Sarrià">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
-<main class="card">
-  <img class="map" src="paisos_catalans.png" alt="">
-  <h1>Jordi i Pol</h1>
-  <div class="date">31 · 10 · 2027</div>
-  <p class="sub">Restaurant Algar de Don Joan<br>Callosa d'en Sarrià<br><br>Ens farà molta il·lusió comptar amb vosaltres.<br>Confirmeu la vostra assistència:</p>
 
-  <form id="f">
+<nav id="nav">
+  <a href="#inici" class="brand">J &amp; P</a>
+  <div class="links">
+    <a href="#lloc">El lloc</a>
+    <a href="#programa">Programa</a>
+    <a href="#arribar">Com arribar</a>
+    <a href="#allotjament">Allotjament</a>
+    <a href="#regals">Regals</a>
+    <a href="#confirmacio">Confirmació</a>
+    <a href="#contacte">Contacte</a>
+  </div>
+</nav>
+
+<header id="inici" class="hero">
+  <div class="hero-inner">
+    <p class="kicker">Ens casem!</p>
+    <h1>Jordi <span>i</span> Pol</h1>
+    <p class="when">31 · 10 · 2027</p>
+    <p class="where">Callosa d'en Sarrià</p>
+    <div id="count" class="count" aria-live="off">
+      <div><b id="cd">–</b><span>dies</span></div>
+      <div><b id="ch">–</b><span>hores</span></div>
+      <div><b id="cm">–</b><span>minuts</span></div>
+      <div><b id="cs">–</b><span>segons</span></div>
+    </div>
+    <a class="btn" href="#confirmacio">Confirma l'assistència</a>
+  </div>
+</header>
+
+<section class="sec intro">
+  <img class="mapa" src="paisos_catalans.png" alt="">
+  <h2>Us convidem a celebrar amb nosaltres</h2>
+  <p class="lead">Amb molta il·lusió volem compartir amb vosaltres el dia més especial de les nostres vides. Dos camins, de Badalona i de Callosa d'en Sarrià, que s'han trobat a València i ara us conviden a la seua festa.</p>
+  <div class="orn"></div>
+</section>
+
+<section id="lloc" class="sec alt">
+  <div class="split">
+    <div class="photo"><img src="img/fonts.jpg" alt="Les Fonts de l'Algar"></div>
+    <div class="txt">
+      <h2>El lloc</h2>
+      <h3>Restaurant Algar de Don Joan</h3>
+      <p>Ens casarem a Callosa d'en Sarrià, a la Marina Baixa, envoltats de les Fonts de l'Algar: aigua, verd i muntanya. Un racó de la terra que ens agrada tant que hem decidit fer-hi el nostre gran dia.</p>
+      <p><b>Diumenge, 31 d'octubre de 2027</b><br>Hora: per confirmar</p>
+      <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=Restaurante+Algar+de+Don+Joan+Callosa+d%27en+Sarria" target="_blank" rel="noopener">Obrir al mapa</a>
+    </div>
+  </div>
+</section>
+
+<section id="galeria" class="sec">
+  <h2>L'Algar</h2>
+  <div class="gallery">
+    <figure><img src="img/algar-1.jpg" alt="Restaurant Algar de Don Joan" onerror="this.parentNode.remove()"></figure>
+    <figure><img src="img/algar-2.jpg" alt="Restaurant Algar de Don Joan" onerror="this.parentNode.remove()"></figure>
+    <figure><img src="img/algar-3.jpg" alt="Restaurant Algar de Don Joan" onerror="this.parentNode.remove()"></figure>
+    <figure><img src="img/algar-4.jpg" alt="Restaurant Algar de Don Joan" onerror="this.parentNode.remove()"></figure>
+  </div>
+</section>
+
+<section id="programa" class="sec alt">
+  <h2>Programa del dia</h2>
+  <p class="soft">Els horaris es confirmaran aviat.</p>
+  <ol class="timeline">
+    <li><time>00:00</time><div><h4>Rebuda dels convidats</h4><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div></li>
+    <li><time>00:00</time><div><h4>Cerimònia</h4><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div></li>
+    <li><time>00:00</time><div><h4>Aperitiu</h4><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p></div></li>
+    <li><time>00:00</time><div><h4>Dinar</h4><p>Duis aute irure dolor in reprehenderit in voluptate velit esse.</p></div></li>
+    <li><time>00:00</time><div><h4>Festa i ball</h4><p>Excepteur sint occaecat cupidatat non proident.</p></div></li>
+  </ol>
+</section>
+
+<section id="arribar" class="sec">
+  <h2>Com arribar</h2>
+  <p class="soft">Restaurant Algar de Don Joan · Callosa d'en Sarrià (Alacant)</p>
+  <div class="mapwrap">
+    <iframe title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=Restaurante+Algar+de+Don+Joan+Callosa+d%27en+Sarria&hl=ca&z=14&output=embed"></iframe>
+  </div>
+  <div class="cards">
+    <div class="card"><h4>En cotxe</h4><p>Des de València per l'AP-7 fins a Benidorm i després cap a Callosa d'en Sarrià (CV-70). Hi ha aparcament prop del restaurant.</p></div>
+    <div class="card"><h4>En transport públic</h4><p>Autobús des de Benidorm i Alacant fins a Callosa d'en Sarrià. Lorem ipsum dolor sit amet.</p></div>
+    <div class="card"><h4>En avió</h4><p>Aeroport Alacant-Elx (ALC), a uns 60 km. Lorem ipsum dolor sit amet.</p></div>
+  </div>
+  <a class="btn ghost" href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Algar+de+Don+Joan+Callosa+d%27en+Sarria" target="_blank" rel="noopener">Com arribar-hi (ruta)</a>
+</section>
+
+<section id="allotjament" class="sec alt">
+  <h2>Allotjament</h2>
+  <p class="soft">Callosa d'en Sarrià és a pocs minuts de Benidorm, Altea i Polop, amb moltes opcions on dormir.</p>
+  <div class="cards">
+    <div class="card"><h4>Hotel o casa rural 1</h4><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+    <div class="card"><h4>Hotel o casa rural 2</h4><p>Sed do eiusmod tempor incididunt ut labore et dolore.</p></div>
+    <div class="card"><h4>Hotel o casa rural 3</h4><p>Ut enim ad minim veniam, quis nostrud exercitation.</p></div>
+  </div>
+</section>
+
+<section id="regals" class="sec">
+  <h2>Regals</h2>
+  <p class="lead">El millor regal és tindre-us amb nosaltres. Si voleu tindre un detall, lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  <div class="orn"></div>
+</section>
+
+<section id="confirmacio" class="sec alt">
+  <h2>Confirmació d'assistència</h2>
+  <p class="soft">Confirmeu la vostra assistència quan abans millor.</p>
+  <form id="f" class="rsvp">
     <div>
       <label for="nom">Nom i cognoms</label>
       <input type="text" id="nom" name="nom" required maxlength="120" autocomplete="name">
@@ -41,16 +142,43 @@
       <textarea id="missatge" name="missatge" maxlength="500"></textarea>
     </div>
     <input type="text" name="web" tabindex="-1" autocomplete="off" class="hidden">
-    <button type="submit" id="btn">Enviar</button>
+    <button type="submit" id="btn" class="btn">Enviar</button>
   </form>
   <div id="res" class="msg"></div>
-</main>
+</section>
+
+<section id="contacte" class="sec">
+  <h2>Contacte</h2>
+  <p class="soft">Qualsevol dubte, escriviu-nos o telefoneu-nos.</p>
+  <div class="contact">
+    <a class="btn" href="tel:+34652227577">Telèfon · 652 227 577</a>
+    <a class="btn ghost" href="https://wa.me/34652227577" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <p class="script">Jordi i Pol</p>
+  <p>31 · 10 · 2027 · Callosa d'en Sarrià</p>
+  <p class="us">Us esperem!</p>
+</footer>
+
 <script src="config.js"></script>
 <script>
+const target = new Date('2027-10-31T12:00:00+01:00').getTime();
+const pad = n => String(n).padStart(2, '0');
+function tick() {
+  let d = Math.max(0, target - Date.now()) / 1000;
+  cd.textContent = Math.floor(d / 86400);
+  ch.textContent = pad(Math.floor(d % 86400 / 3600));
+  cm.textContent = pad(Math.floor(d % 3600 / 60));
+  cs.textContent = pad(Math.floor(d % 60));
+}
+tick(); setInterval(tick, 1000);
+
+addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 60), { passive: true });
+
 const f = document.getElementById('f'), res = document.getElementById('res'), btn = document.getElementById('btn'), extra = document.getElementById('extra');
-f.addEventListener('change', () => {
-  extra.classList.toggle('hidden', f.assistencia.value === 'No');
-});
+f.addEventListener('change', () => extra.classList.toggle('hidden', f.assistencia.value === 'No'));
 f.addEventListener('submit', async e => {
   e.preventDefault();
   res.className = 'msg';
