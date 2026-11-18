@@ -99,3 +99,9 @@ footer .us{color:#e2cfa0;font-family:Didot,Georgia,serif;margin-top:12px}
 #add{width:100%;border-style:dashed}
 @media(max-width:600px){.card-form{padding:22px 16px}.gf{grid-template-columns:1fr}}
 .alt>.rsvp{max-width:640px}
+.us-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px;align-items:center}
+.us-grid figure{margin:0;border:1px solid var(--gold);padding:8px;background:#fffdf6;box-shadow:0 10px 30px #3f58421a}
+.us-grid figure:nth-child(1){transform:rotate(-1.5deg)}
+.us-grid figure:nth-child(3){transform:rotate(1.5deg)}
+.us-grid img{width:100%;aspect-ratio:4/5;object-fit:cover}
+@media(max-width:700px){.us-grid{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}.us-grid figure{transform:none!important}}
