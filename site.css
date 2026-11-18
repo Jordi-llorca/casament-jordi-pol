@@ -107,3 +107,5 @@ footer .us{color:#e2cfa0;font-family:Didot,Georgia,serif;margin-top:12px}
 @media(max-width:700px){.us-grid{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}.us-grid figure{transform:none!important}}
 
 .iban{max-width:520px;margin:24px auto 0;text-align:center}.iban p{margin:6px 0}
+
+.contact{display:flex;flex-wrap:wrap;gap:40px;justify-content:center}.contact .who{display:flex;flex-direction:column;gap:12px;align-items:center}.contact .who h4{margin:0;font-size:1.4em;color:#3f5842}
