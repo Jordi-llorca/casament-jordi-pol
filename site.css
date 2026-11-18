@@ -105,3 +105,5 @@ footer .us{color:#e2cfa0;font-family:Didot,Georgia,serif;margin-top:12px}
 .us-grid figure:nth-child(3){transform:rotate(1.5deg)}
 .us-grid img{width:100%;aspect-ratio:4/5;object-fit:cover}
 @media(max-width:700px){.us-grid{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}.us-grid figure{transform:none!important}}
+
+.iban{max-width:520px;margin:24px auto 0;text-align:center}.iban p{margin:6px 0}
